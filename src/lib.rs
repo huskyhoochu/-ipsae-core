@@ -24,11 +24,15 @@ impl FromStr for Markdown {
     fn from_str(line: &str) -> Result<Self, Self::Err> {
         let h1_regex = Regex::new(r"^#\s").unwrap();
 
-        if h1_regex.is_match(line) {
-            return Ok(Markdown {
-                style: MarkdownType::H1,
-                content: line.to_string(),
-            });
+        match h1_regex.is_match(line) {
+            true => {
+                let split_line: Vec<&str> = h1_regex.split(line).collect();
+                return Ok(Markdown {
+                    style: MarkdownType::H1,
+                    content: split_line[1].to_string(),
+                });
+            }
+            false => {}
         }
 
         Ok(Markdown {
