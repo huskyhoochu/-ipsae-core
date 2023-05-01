@@ -17,6 +17,8 @@ pub struct Markdown {
     pub index: usize,
     pub style: MarkdownType,
     pub content: String,
+    pub is_block: bool,
+    pub children: Vec<Markdown>,
 }
 
 pub trait Visitable<V: Visitor> {
@@ -26,10 +28,11 @@ pub trait Visitable<V: Visitor> {
 pub struct MarkdownVisitable {
     pub style: MarkdownType,
     pub regex: Regex,
+    pub is_block: bool,
 }
 
 impl<V: Visitor> Visitable<V> for MarkdownVisitable {
     fn accept(&self, visitor: V, index: usize, content: &str) -> Result<Markdown,  &'static str> {
-        visitor.visit(index, self.regex.clone(), self.style.clone(), content)
+        visitor.visit(index, self.regex.clone(), self.style.clone(), self.is_block.clone(), content)
     }
 }

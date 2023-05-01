@@ -12,11 +12,15 @@ mod tests {
             index: 0,
             style: MarkdownType::H1,
             content: "hello".to_string(),
+            is_block: true,
+            children: vec![],
         });
         assert_eq!(result[1], Markdown {
             index: 1,
             style: MarkdownType::H2,
             content: "my friend!".to_string(),
+            is_block: true,
+            children: vec![],
         });
     }
 }

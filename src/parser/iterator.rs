@@ -38,31 +38,37 @@ pub fn get_markdown_iterator(visitor: VisitorBase) -> MarkdownIterator<VisitorBa
     let markdown_h1 = MarkdownVisitable {
         style: MarkdownType::H1,
         regex: Regex::new(r"^#\s").unwrap(),
+        is_block: true,
     };
 
     let markdown_h2 = MarkdownVisitable {
         style: MarkdownType::H2,
         regex: Regex::new(r"^#{2}\s").unwrap(),
+        is_block: true,
     };
 
     let markdown_h3 = MarkdownVisitable {
         style: MarkdownType::H2,
         regex: Regex::new(r"^#{3}\s").unwrap(),
+        is_block: true,
     };
 
     let markdown_h4 = MarkdownVisitable {
         style: MarkdownType::H2,
         regex: Regex::new(r"^#{4}\s").unwrap(),
+        is_block: true,
     };
 
     let markdown_h5 = MarkdownVisitable {
         style: MarkdownType::H2,
         regex: Regex::new(r"^#{5}\s").unwrap(),
+        is_block: true,
     };
 
     let markdown_h6 = MarkdownVisitable {
         style: MarkdownType::H2,
         regex: Regex::new(r"^#{6}\s").unwrap(),
+        is_block: true,
     };
 
     MarkdownIterator::create(visitor, vec![markdown_h1, markdown_h2, markdown_h3, markdown_h4, markdown_h5, markdown_h6])
