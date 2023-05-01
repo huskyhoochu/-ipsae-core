@@ -1,6 +1,6 @@
 use regex::Regex;
 
-use crate::parser::parse::Visitor;
+use crate::parser::visitor::Visitor;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub enum MarkdownType {
@@ -14,12 +14,13 @@ pub enum MarkdownType {
 
 #[derive(Debug, PartialEq)]
 pub struct Markdown {
+    pub index: usize,
     pub style: MarkdownType,
     pub content: String,
 }
 
 pub trait Visitable<V: Visitor> {
-    fn accept(&self, visitor: V, content: &str) -> Result<Markdown,  &'static str>;
+    fn accept(&self, visitor: V, index: usize, content: &str) -> Result<Markdown,  &'static str>;
 }
 
 pub struct MarkdownVisitable {
@@ -28,7 +29,7 @@ pub struct MarkdownVisitable {
 }
 
 impl<V: Visitor> Visitable<V> for MarkdownVisitable {
-    fn accept(&self, visitor: V, content: &str) -> Result<Markdown,  &'static str> {
-        visitor.visit(self.regex.clone(), self.style.clone(), content)
+    fn accept(&self, visitor: V, index: usize, content: &str) -> Result<Markdown,  &'static str> {
+        visitor.visit(index, self.regex.clone(), self.style.clone(), content)
     }
 }

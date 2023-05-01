@@ -9,10 +9,12 @@ mod tests {
 
         assert_eq!(result.len(), 2);
         assert_eq!(result[0], Markdown {
+            index: 0,
             style: MarkdownType::H1,
             content: "hello".to_string(),
         });
         assert_eq!(result[1], Markdown {
+            index: 1,
             style: MarkdownType::H2,
             content: "my friend!".to_string(),
         });
