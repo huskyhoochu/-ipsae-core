@@ -10,5 +10,5 @@ pub fn render(origin_string: String) -> Vec<Markdown> {
     let visitor = VisitorBase;
     let iterator = get_markdown_iterator(visitor);
 
-    iterator.parse_str(origin_string)
+    iterator.parse_markdown(origin_string)
 }

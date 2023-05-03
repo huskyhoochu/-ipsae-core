@@ -14,25 +14,30 @@ pub enum MarkdownType {
 
 #[derive(Debug, PartialEq)]
 pub struct Markdown {
-    pub index: usize,
     pub style: MarkdownType,
-    pub content: String,
-    pub is_block: bool,
+    pub content: Option<String>,
     pub children: Vec<Markdown>,
 }
 
 pub trait Visitable<V: Visitor> {
-    fn accept(&self, visitor: V, index: usize, content: &str) -> Result<Markdown,  &'static str>;
+    fn accept(&self, visitor: V, content: &str) -> Option<Markdown>;
 }
 
 pub struct MarkdownVisitable {
     pub style: MarkdownType,
     pub regex: Regex,
-    pub is_block: bool,
 }
 
 impl<V: Visitor> Visitable<V> for MarkdownVisitable {
-    fn accept(&self, visitor: V, index: usize, content: &str) -> Result<Markdown,  &'static str> {
-        visitor.visit(index, self.regex.clone(), self.style.clone(), self.is_block.clone(), content)
+    fn accept(&self, visitor: V, content: &str) -> Option<Markdown> {
+        if self.regex.is_match(content) {
+            let split_content: Vec<&str> = self.regex.split(content).collect();
+            if self.style == MarkdownType::P {
+                return Some(visitor.visit(self.style.clone(), content));
+            }
+            return Some(visitor.visit(self.style.clone(), split_content[1]));
+        }
+
+        None
     }
 }
