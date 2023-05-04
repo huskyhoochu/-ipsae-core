@@ -1,11 +1,11 @@
 #[cfg(test)]
 mod tests {
-    use ipsae::{Markdown, MarkdownType};
+    use ipsae_core::{Markdown, MarkdownType};
 
     #[test]
     fn it_works() {
         let origin_string = "# hello\n## my friend!\nmy name is **harry** potter.\n*avada cadavra!*".to_string();
-        let result = ipsae::render(origin_string);
+        let result = ipsae_core::render(origin_string);
 
         println!("{:?}", result);
 
